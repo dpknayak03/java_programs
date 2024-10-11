@@ -1,33 +1,16 @@
 package OOPs;
 
-public class Student1
-{
+import java.util.ArrayList;
+import java.util.List;
+
+class Student {
     String firstName;
     String lastName;
     int registration;
     int grade;
     int year;
 
-    public Student1()
-    {
-        this.firstName = "";
-        this.lastName = "";
-        this.registration = 0;
-        this.grade = 0;
-        this.year = 1;
-    }
-
-    public Student1(String firstName, String lastName)
-    {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.registration = 0;
-        this.grade = 0;
-        this.year = 1;
-    }
-
-    public Student1(String firstName, String lastName, int registration, int grade, int year)
-    {
+    Student(String firstName, String lastName, int registration, int grade, int year) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.registration = registration;
@@ -35,62 +18,103 @@ public class Student1
         this.year = year;
     }
 
-
-    public void printFullName()
-    {
-        System.out.println("Full name: " + firstName + " " + lastName);
+    void printFullName() {
+        System.out.println(this.firstName + " " + this.lastName);
     }
-    public boolean isApproved()
-    {
+
+    public boolean isApproved() {
         return grade >= 60;
     }
-    public int changeYearIfApproved()
-    {
-        if(grade >= 60)
-        {
-            year += 1;
-            System.out.println("Congratulations");
-        }
-        else
-        {
-            System.out.println("No");
+
+    public int changeYearIfApproved() {
+        if (isApproved()) {
+            year++;
+            System.out.println("Congratulations! " + firstName + " year " + year);
         }
         return year;
     }
-       public void enroll(Student1 student)
-       {
-	     
-	   }
-	
-	   public void unEnroll(Student1 student){
-	     
-	   }
-	
-	   public int countStudents(){
-	       //TODO implement
-	       return 0;
-	   }
-	   
-	   public int bestGrade(){
-	       //TODO implement
-	       return 0;
-   }
 
-    public static void main(String[] args)
-    {
-        Student1 s1 = new Student1("Deepak", "Nayak", 101, 70, 2024);
+    public int getGrade() {
+        return grade;
+    }
 
-        s1.printFullName();
+    public String getName() {
+        return firstName + " " + lastName;
+    }
+}
 
-        if(s1.isApproved())
-        {
-            System.out.println("Approved");
+class Course {
+    String courseName;
+    String professorName;
+    int year;
+    List<Student> children; 
+
+    public Course(String courseName, String professorName, int year) {
+        this.courseName = courseName;
+        this.professorName = professorName;
+        this.year = year;
+        this.children = new ArrayList<>();
+    }
+
+    public void enroll(Student student) {
+        if (!children.contains(student)) {
+            children.add(student);
+            System.out.println(student.getName() + " enrolled in " + courseName);
+        } else {
+            System.out.println(student.getName() + " is already enrolled in " + courseName);
         }
-        else
-        {
-            System.out.println("Not Approved");
-        }
+    }
 
-        s1.changeYearIfApproved();
+    public void enroll(Student[] studentsArray) {
+        for (Student student : studentsArray) {
+            enroll(student);
+        }
+    }
+
+    public void unEnroll(Student student) {
+        if (children.remove(student)) {
+            System.out.println(student.getName() + " unenrolled from " + courseName);
+        } else {
+            System.out.println(student.getName() + " is not enrolled in " + courseName);
+        }
+    }
+
+    public int countStudents() {
+        return children.size();
+    }
+
+    public int bestGrade() {
+        int best = 0;
+        for (Student student : children) {
+            if (student.getGrade() > best) {
+                best = student.getGrade();
+            }
+        }
+        return best;
+    }
+
+    public String toString() {
+        return "Course: " + courseName + ", Professor: " + professorName + ", Year: " + year + ", Enrolled Students: " + children.size();
+    }
+}
+
+public class student1 {
+    public static void main(String[] args) {
+        Student st = new Student("Deepak", "Nayak", 1, 80, 2024); 
+
+        st.printFullName(); 
+        if (st.isApproved()) {
+            System.out.println("approved");
+        } else {
+            System.out.println("not approved");
+        }
+        System.out.println("Current Year: " + st.changeYearIfApproved());
+
+
+        Course course = new Course("Java programming", "Ambika mam", 2024);
+
+
+        course.enroll(st); 
+        System.out.println(course);
     }
 }
