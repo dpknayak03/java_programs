@@ -1,28 +1,35 @@
-public class Employee 
+public class Employee implements 
 {
-
-    String firstNeme;
+    String firstName;
     String lastName;
     int registration;
     int age;
     int daysWorked;
     int vacationDaysTaken;
-    double salery;
+    double salary;
     int yearsWorked;
+    private String userName;
+    private String passWord;
+
     
-    
-    public Employee(String firstNeme, String lastName, int registration, int age, int daysWorked, int vacationDayTaken,
-            double salery, int yearsWorked) {
-        this.firstNeme = firstNeme;
+
+    public Employee(String firstName, String lastName, int registration, int age, int daysWorked, int vacationDaysTaken,
+            double salary, int yearsWorked) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.registration = registration;
         this.age = age;
         this.daysWorked = daysWorked;
-        this.vacationDaysTaken = vacationDayTaken;
-        this.salery = salery;
+        this.vacationDaysTaken = vacationDaysTaken;
+        this.salary = salary;
         this.yearsWorked = yearsWorked;
+        this.userName=userName;
+        this.passWord=passWord;
     }
-    
+       @Override
+       public boolean login(String username, String password){
+        return this.userName.equals(username) && this.passWord.equals(password);
+       }
     public int timeToRetirement(int age,int yearsWorked)
     {
         // time to retirement = min(60 - age, 40 - yearsWorked)
@@ -38,7 +45,5 @@ public class Employee
      {
          // bonus = 2.2*salary
          return (int) ((int)2.2*salary);
-     }
-
-    
+     } 
 }
